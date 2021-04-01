@@ -1,15 +1,13 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { firebase } from '../../firebase/FirebaseConfig'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import './Authentication.css'
+import { logInUser } from '../../firebase/Authentication';
 import { Snackbar } from '@material-ui/core';
+import './Authentication.css';
 
 class Authentication extends React.Component {
-
     constructor(props){
         super(props);
-
         this.state = {
             snack:{
                 message: "",
@@ -18,36 +16,19 @@ class Authentication extends React.Component {
         }
     }
 
-    centeredStyle = {
-        "position":"absolute",
-        "top":"50%",
-        "left":"50%",
-        "transform":"translate(-50%,-50%)"
-    };
-
-    logInUser() {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider).then((result) => {
+    handleLogIn = () => {
+       logInUser().then((res) => {
+            const { message, open } = res;
             this.setState({
-                snack:{
-                    message: "Success",
-                    open: true,
-                }
+                snack: { message, open }
             })
-        }).catch((error) => {
-            this.setState({
-                snack:{
-                    message: error.message,
-                    open: true,
-                }
-            })
-        });
-    };
+       });
+    }
 
     handleClose = () =>{
         this.setState({
             snack:{
-                message: "error.message",
+                message: "error",
                 open: false,
             }
         })
@@ -55,18 +36,19 @@ class Authentication extends React.Component {
 
     render() {
       return (
-        <div>   
+        <div className="authentication">   
             <h1 className = "logo">Quity.</h1>
-            <div style={this.centeredStyle} className="Authentication">
+            <div  className="motto">
                 <h1>Nu trebuie sa fii batran ca sa iesi la pensie! </h1>
                     <Button variant="contained" 
-                        style={{"textAlign":"center"}} 
                         color="primary" 
-                        onClick={()=>this.logInUser()}
-                        endIcon={<ArrowForwardIcon/>}
-                        >Autentificare</Button>
+                        onClick={()=>this.handleLogIn()}
+                        endIcon={<ArrowForwardIcon/>}>
+                            Autentificare
+                    </Button>
             </div>
-            <Snackbar anchorOrigin={ {vertical: "bottom", horizontal: "center" }}
+            <Snackbar 
+                anchorOrigin={{vertical: "bottom", horizontal: "center" }}
                 open={this.state.open}
                 message={this.state.message}
                 onClose={this.handleClose}>
