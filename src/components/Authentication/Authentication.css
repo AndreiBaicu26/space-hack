@@ -1,14 +1,18 @@
-.logo{
-    position: absolute;
-    font-size: 6rem;
+.authentication {
+    display: inline-block;
+    position: relative;
     top: 20%;
     left: 50%;
-    transform:translate(-50%,-50%);
-    color: #1769aa;
+    transform: translate(-50%, 50%);
 }
 
-.Authentication{
+.motto, .logo {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    color: #1769aa; 
 }

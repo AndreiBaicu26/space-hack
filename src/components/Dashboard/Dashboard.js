@@ -1,5 +1,4 @@
 import {  Grid, makeStyles, Paper } from '@material-ui/core';
-import { db } from '../../firebase/FirebaseConfig'
 import React, { useEffect } from 'react';
 import{
 ComposedChart,
@@ -14,8 +13,12 @@ Cell,
 } from 'recharts';
 import './Dashboard.css';
 import CompoundCalculator from '../Compound Interest/CompundCalculator'
-
 import AccordionInfo from '../Accordion/Accordion';
+
+
+import { getUser } from '../../firebase/User';
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -39,23 +42,12 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
- const getUser = async(uid) => {
-  let user;
-  await db.collection('users').doc(uid).get().then((doc) => {
-    if (doc.exists) {
-      user = doc.data();
-    }
-  });
-  return user;
-}
+
+
 
 export default function Dashboard(props){
   const classes = useStyles();
   const [userStats, setUser] = React.useState({});
-  
-  // gradul de risc
-  // suma ramasa 
-    
   const info =
   [
       {
